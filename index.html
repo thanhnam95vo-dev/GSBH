@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="GSBH VinaPhone">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
 <style>
@@ -182,12 +182,13 @@ body.is-login header.top{display:none}
 .codebig{font-size:30px;font-weight:700;letter-spacing:.12em;font-variant-numeric:tabular-nums;color:var(--accent);padding:8px 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
+<style>.mark{background:#fff!important;border:1px solid var(--line);padding:3px;overflow:hidden}.mark{display:flex!important;align-items:center;justify-content:center}.mark img{max-width:100%;max-height:100%;width:auto;height:auto;display:block}.mark.lg{padding:5px}</style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="brand"><div class="mark">VNP</div><div style="min-width:0"><h1>Giám sát bán hàng</h1><small>Điểm bán trọng điểm · VinaPhone Tây Ninh</small></div></div>
+    <div class="brand"><div class="mark"><img src="logo.png" alt="VNPT"></div><div style="min-width:0"><h1>Giám sát bán hàng</h1><small>Điểm bán trọng điểm · VinaPhone Tây Ninh</small></div></div>
     <div class="who" id="who"></div>
   </header>
   <nav class="tabs" id="tabs"></nav>
@@ -317,7 +318,7 @@ function renderNav(){
 
 function renderLogin(v){
   v.innerHTML=`<div class="login"><div class="login-card">
-    <div class="login-brand"><div class="mark lg">VNP</div><div><h1>Giám sát bán hàng</h1><p>Điểm bán trọng điểm · VinaPhone Tây Ninh</p></div></div>
+    <div class="login-brand"><div class="mark lg"><img src="logo.png" alt="VNPT"></div><div><h1>Giám sát bán hàng</h1><p>Điểm bán trọng điểm · VinaPhone Tây Ninh</p></div></div>
     <form id="lg" novalidate>
       <h2>Đăng nhập</h2>
       <label class="f">Gmail<input id="lg_email" type="email" inputmode="email" autocomplete="username" placeholder="ten@gmail.com" required></label>
