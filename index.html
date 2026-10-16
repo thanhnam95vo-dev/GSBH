@@ -150,6 +150,7 @@ tfoot td{font-weight:700;background:var(--surface2)}
 .progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
 .actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 @media (max-width:640px){.actions{grid-template-columns:repeat(3,1fr);gap:8px}.act{flex-direction:column;text-align:center;gap:6px;padding:12px 6px}.act small{display:none}.act b{font-size:13px;line-height:1.25}}
+.actions.one{grid-template-columns:1fr;max-width:420px}
 .act{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;color:var(--fg)}
 .act svg{width:28px;height:28px;flex:none;color:var(--accent)}
 .act b{display:block;font-size:15px}.act small{display:block;color:var(--muted);font-size:12px}
@@ -269,6 +270,7 @@ function lsSet(v){try{v?localStorage.setItem(LS,v):localStorage.removeItem(LS)}c
 const isAdmin=()=>S.user&&S.user.role==="admin";
 const canStats=()=>S.user&&(S.user.role==="admin"||S.user.role==="lanhdao");
 const canWrite=()=>S.user&&(S.user.role==="admin"||S.user.role==="totruong");
+const canReport=()=>S.user&&S.user.role==="totruong";
 const myUnit=()=>(S.user&&S.user.role==="totruong"&&S.user.donVi)||"";
 const defaultTab=()=>canStats()?"overview":"points";
 const todayS=()=>S.srvToday&&S.srvToday>today()?S.srvToday:today();
@@ -309,9 +311,9 @@ function renderNav(){
   const tabs=[];if(canStats())tabs.push(["overview","Tổng quan",ICON.chart]);
   tabs.push(["points","Lịch bán hàng",ICON.pin],["hist","Báo cáo",ICON.hist]);
   if(canStats())tabs.push(["stats","Thống kê",ICON.chart]);
-  $("#tabs").innerHTML=tabs.map(([k,l])=>`<button data-tab="${k}" aria-current="${S.tab===k}">${l}</button>`).join("")+(canWrite()?`<span class="cta" style="display:flex;gap:8px;align-items:center"><button class="btn sm" data-act="camera">Chụp ảnh</button><button class="btn sm" data-act="newloc">${isAdmin()?"Giao lịch":"+ Khai báo lịch"}</button><button class="btn sm primary" data-act="checkin">Check-in</button></span>`:"");
+  $("#tabs").innerHTML=tabs.map(([k,l])=>`<button data-tab="${k}" aria-current="${S.tab===k}">${l}</button>`).join("")+(isAdmin()?`<span class="cta" style="display:flex;gap:8px;align-items:center"><button class="btn sm primary" data-act="newloc">+ Giao lịch bán hàng</button></span>`:canReport()?`<span class="cta" style="display:flex;gap:8px;align-items:center"><button class="btn sm" data-act="camera">Chụp ảnh</button><button class="btn sm" data-act="newloc">+ Khai báo lịch</button><button class="btn sm primary" data-act="checkin">Check-in</button></span>`:"");
   const b=tabs.map(([k,l,i])=>`<button data-tab="${k}" aria-current="${S.tab===k}">${i}${l}</button>`);
-  if(canWrite())b.splice(Math.min(canStats()?2:1,b.length),0,`<button class="camb" data-act="camera" aria-label="Chụp ảnh">${ICON.cam}</button>`);
+  if(canReport())b.splice(Math.min(1,b.length),0,`<button class="camb" data-act="camera" aria-label="Chụp ảnh">${ICON.cam}</button>`);
   $("#bottombar").innerHTML=b.join("");
 }
 
@@ -345,13 +347,14 @@ function locCheckins(l){return S.cis.filter(c=>c.locationId===l.id)}
 function locState(l,soon){soon=soon||S.ov.soon;const t=todayS();if(locCheckins(l).length)return"done";if(l.ngay<t)return"overdue";if(l.ngay===t)return"due";if(l.ngay<=addDays(t,soon))return"soon";return"plan"}
 const STATE={done:{cls:"ok",t:"Đã thực hiện"},overdue:{cls:"bad",t:"Quá hạn, chưa báo cáo"},due:{cls:"warn",t:"Đến hạn hôm nay"},soon:{cls:"info",t:"Sắp đến hạn"},plan:{cls:"",t:"Kế hoạch"}};
 function canEditLoc(l){return isAdmin()||(canWrite()&&l.createdByEmail===S.user.email&&l.giaoBoi!=="admin")}
-function canCheckin(l){return isAdmin()||(canWrite()&&l.donVi===myUnit())}
+function canCheckin(l){return canReport()&&l.donVi===myUnit()}
 function actionBar(){
-  if(!canWrite())return"";
+  if(isAdmin())return`<div class="actions one"><button class="act primary" data-act="newloc">${ICON.hist}<span><b>Giao lịch bán hàng</b><small>Giao việc cho VNPT khu vực, kèm ảnh vị trí</small></span></button></div>`;
+  if(!canReport())return"";
   return`<div class="actions">
     <button class="act primary" data-act="camera">${ICON.cam}<span><b>Chụp ảnh</b><small>Mở camera điện thoại</small></span></button>
     <button class="act" data-act="checkin">${ICON.pin}<span><b>Check-in bán hàng</b><small>Gửi ảnh + kết quả tại điểm</small></span></button>
-    <button class="act" data-act="newloc">${ICON.hist}<span><b>${isAdmin()?"Giao lịch bán hàng":"Khai báo lịch bán hàng"}</b><small>${isAdmin()?"Giao cho 1 VNPT khu vực":"Lịch bán của "+esc(myUnit())}</small></span></button>
+    <button class="act" data-act="newloc">${ICON.hist}<span><b>Khai báo lịch bán hàng</b><small>Lịch bán của ${esc(myUnit())}</small></span></button>
   </div>`;
 }
 function photoImgs(ids,max){return(ids||[]).slice(0,max||6).map(id=>`<img alt="Ảnh check-in" data-pid="${esc(id)}" ${PHOTO_CACHE[id]?`src="${PHOTO_CACHE[id]}"`:""}>`).join("")}
@@ -364,7 +367,8 @@ function locCard(l){
     <div class="meta"><span>${esc(l.diaChi||"")}</span>${l.xaPhuong?`<span>${esc(l.xaPhuong)}</span>`:""}</div>
     <div class="meta"><span><b style="color:var(--fg)">${esc(l.donVi)}</b></span><span>${esc(l.hinhThuc||"")}</span>${l.phuTrach?`<span>Phụ trách: ${esc(l.phuTrach)}</span>`:""}</div>
     ${l.ghiChu?`<div class="note">${esc(l.ghiChu)}</div>`:""}
-    ${ph.length?`<div class="thumbs">${photoImgs(ph,3)}</div>`:""}
+    ${(l.photos||[]).length?`<div class="note" style="font-weight:600">Ảnh vị trí</div><div class="thumbs">${photoImgs(l.photos,3)}</div>`:""}
+    ${ph.length?`<div class="note" style="font-weight:600">Ảnh check-in</div><div class="thumbs">${photoImgs(ph,3)}</div>`:""}
     <div class="row">
       ${canCheckin(l)&&l.ngay<=t?`<button class="btn sm primary" data-act="checkin" data-loc="${esc(l.id)}">${cs.length?"Báo cáo thêm":"Check-in"}</button>`:""}
       <a class="btn sm" href="${esc(mapsUrl(l))}" target="_blank" rel="noopener">Bản đồ</a>
@@ -446,10 +450,26 @@ function openLoc(id){
     <label class="f">Đến giờ<input id="l_den" type="time" value="${esc(l?.gioDen||"11:00")}"></label>
     <label class="f">Người phụ trách tại điểm<input id="l_pt" type="text" placeholder="Họ tên, SĐT" value="${esc(l?.phuTrach||"")}"></label>
     <label class="f full">${isAdmin()?"Yêu cầu / nội dung triển khai":"Ghi chú"}<textarea id="l_gc" placeholder="Chương trình, gói cước trọng tâm, quà tặng…">${esc(l?.ghiChu||"")}</textarea></label>
+    <div class="full" style="display:flex;flex-direction:column;gap:6px"><span class="f" style="font-size:13px;font-weight:600;color:var(--muted)">Ảnh vị trí bán hàng (tối đa 3) – giúp nhân viên nhận ra khu vực</span>
+      <div class="photos" id="l_ph"></div>
+      <input id="l_file" type="file" accept="${IMG_ACC}" capture="environment" hidden><input id="l_file2" type="file" accept="${IMG_ACC}" multiple hidden>
+      <button type="button" class="btn sm" id="l_lib" style="align-self:flex-start">Chọn ảnh có sẵn trong máy</button></div>
     ${!l?`<label class="f full" style="flex-direction:row;align-items:center;gap:8px;color:var(--fg)"><input id="l_rep" type="checkbox" style="width:auto"> Lặp lại cùng điểm cho <input id="l_n" type="number" min="1" max="30" value="5" style="width:70px"> ngày liên tiếp</label>`:""}
     <div class="row full">${l?`<button type="button" class="btn danger" id="l_del">Xoá lịch</button>`:""}<span class="sp"></span><button type="button" class="btn" data-close>Huỷ</button><button class="btn primary" type="submit" id="l_ok">${isAdmin()&&!l?"Giao lịch":"Lưu"}</button></div>
    </form>`);
   const fillXp=()=>{const u=$("#l_dv").value;$("#l_xp").innerHTML=`<option value="">— Chọn —</option>`+(UNITS[u]||[]).map(x=>`<option ${l?.xaPhuong===x?"selected":""}>${esc(x)}</option>`).join("")};fillXp();$("#l_dv").onchange=fillXp;
+  const keep=(l&&l.photos||[]).slice(),shots=[];
+  const drawL=()=>{const n=keep.length+shots.length;
+    $("#l_ph").innerHTML=keep.map((id,i)=>`<div class="p"><img data-pid="${esc(id)}" alt="Ảnh vị trí" ${PHOTO_CACHE[id]?`src="${PHOTO_CACHE[id]}"`:""}><button type="button" data-rk="${i}" aria-label="Bỏ ảnh">×</button></div>`).join("")
+      +shots.map((x,i)=>`<div class="p"><img src="${x.url}" alt="Ảnh vị trí mới"><button type="button" data-rs="${i}" aria-label="Bỏ ảnh">×</button></div>`).join("")
+      +(n<3?`<label class="addph" for="l_file">${ICON.cam}Chụp ảnh vị trí</label>`:"");
+    $("#l_ph").querySelectorAll("[data-rk]").forEach(b=>b.onclick=()=>{keep.splice(+b.dataset.rk,1);drawL()});
+    $("#l_ph").querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{shots.splice(+b.dataset.rs,1);drawL()});
+    hydratePhotos()};
+  drawL();
+  const addL=async files=>{const loc={donVi:$("#l_dv").value||"",ten:$("#l_ten").value.trim()||"Vị trí bán hàng"};
+    for(const f of files){if(keep.length+shots.length>=3)break;try{const r=await stampPhoto(f,loc);r.url=r.canvas.toDataURL("image/jpeg",.8);shots.push(r);drawL()}catch(e){toast("Không đọc được ảnh")}}};
+  $("#l_file").onchange=e=>{addL([...e.target.files]);e.target.value=""};$("#l_file2").onchange=e=>{addL([...e.target.files]);e.target.value=""};$("#l_lib").onclick=()=>$("#l_file2").click();
   if(l){const b=$("#l_del");b.onclick=async()=>{if(!b.dataset.arm){b.dataset.arm=1;b.textContent="Bấm lần nữa để xoá";return}
     b.disabled=true;try{await api("deleteLocation",S.token,l.id);await reload();closeSheet();render();toast("Đã xoá lịch.")}catch(e){b.disabled=false;toast(errMsg(e))}}}
   $("#lf").onsubmit=async e=>{e.preventDefault();
@@ -457,7 +477,8 @@ function openLoc(id){
     if(!d.donVi)return toast("Chọn VNPT khu vực.");if(!d.ten||!d.ngay)return toast("Nhập tên điểm bán và ngày.");
     const n=!l&&$("#l_rep").checked?num($("#l_n").value):1;
     const ok=$("#l_ok");ok.disabled=true;ok.textContent="Đang lưu…";
-    try{await api("saveLocation",S.token,d,n);await reload();closeSheet();render();toast(l?"Đã lưu lịch.":isAdmin()?"Đã giao lịch cho "+d.donVi+".":"Đã khai báo lịch bán hàng.")}
+    d.keepPhotos=keep;const photos=shots.map(x=>({data:x.url}));if(photos.length)ok.textContent="Đang tải ảnh…";
+    try{await api("saveLocation",S.token,d,n,photos);await reload();closeSheet();render();toast(l?"Đã lưu lịch.":isAdmin()?"Đã giao lịch cho "+d.donVi+".":"Đã khai báo lịch bán hàng.")}
     catch(x){ok.disabled=false;ok.textContent="Lưu";toast(errMsg(x))}
   };
 }
@@ -532,7 +553,7 @@ function renderHist(v){
   v.innerHTML=actionBar()+`<div class="toolbar">${canStats()?`<select id="h_unit"><option value="">Tất cả đơn vị</option>${UNIT_LIST.map(u=>`<option ${hf.unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select>`:`<span class="pill ok">${esc(myUnit())}</span>`}
     <div class="seg">${[["","Tất cả"],["todo","Chưa đánh giá"],["bad","Không đạt"]].map(([k,l])=>`<button data-hs="${k}" aria-pressed="${hf.status===k}">${l}</button>`).join("")}</div></div>
   ${C.length?`<div class="list">${C.slice(0,100).map(ciCard).join("")}</div>${C.length>100?`<p class="note">Hiển thị 100/${C.length} báo cáo gần nhất. Toàn bộ dữ liệu có trong tab CheckIn của Google Sheet.</p>`:""}`
-   :`<div class="empty"><h3>Chưa có báo cáo check-in</h3><p>Bấm Chụp ảnh hoặc Check-in bán hàng để gửi kết quả tại điểm.</p></div>`}`;
+   :`<div class="empty"><h3>Chưa có báo cáo check-in</h3><p>${canReport()?"Bấm Chụp ảnh hoặc Check-in bán hàng để gửi kết quả tại điểm.":"Báo cáo của Tổ trưởng các VNPT khu vực sẽ hiện tại đây sau khi check-in."}</p></div>`}`;
   const hu=$("#h_unit");if(hu)hu.onchange=e=>{S.hf.unit=e.target.value;render()};
 }
 
@@ -589,8 +610,8 @@ document.addEventListener("click",async e=>{
   if(act==="refresh"){try{await reload();render();toast("Đã cập nhật dữ liệu mới nhất.")}catch(x){toast(errMsg(x))}return}
   if(act==="newloc")return openLoc();
   if(act==="editloc")return openLoc(t.dataset.loc);
-  if(act==="checkin")return openCheckin(t.dataset.loc);
-  if(act==="camera"){const i=$("#camQuick");i.value="";i.click();return}
+  if(act==="checkin"){if(!canReport())return;return openCheckin(t.dataset.loc)}
+  if(act==="camera"){if(!canReport())return;const i=$("#camQuick");i.value="";i.click();return}
   if(act==="remind"){const l=S.locs.find(x=>x.id===t.dataset.loc);if(l)copyText(reminderText(l,t.dataset.s));return}
   if(t.dataset.rv){const id=t.dataset.ci;const note=(document.querySelector(`[data-rvnote="${CSS.escape(id)}"]`)||{}).value||"";
     t.disabled=true;try{await api("review",S.token,id,t.dataset.rv,note);await reload();render();toast("Đã lưu đánh giá.")}catch(x){t.disabled=false;toast(errMsg(x))}}
