@@ -205,6 +205,7 @@ body.is-login header.top{display:none}
   <nav class="tabs" id="tabs"></nav>
   <main id="view"><div class="empty"><h3>Đang tải…</h3></div></main>
 </div>
+<p class="note" id="appver" style="text-align:center;margin:24px 0 8px">Phiên bản 16/10/2026 23:55</p>
 <div class="bottombar" id="bottombar"></div>
 <div id="layer"></div>
 <script>const IMG_ACC="image/\x2a";
@@ -494,7 +495,7 @@ function openLoc(id){
     <label class="f full">${isAdmin()?"Yêu cầu / nội dung triển khai":"Ghi chú"}<textarea id="l_gc" placeholder="Chương trình, gói cước trọng tâm, quà tặng…">${esc(l?.ghiChu||"")}</textarea></label>
     <div class="full" style="display:flex;flex-direction:column;gap:6px"><span class="f" style="font-size:13px;font-weight:600;color:var(--muted)">Ảnh vị trí bán hàng (tối đa 3) – giúp nhân viên nhận ra khu vực</span>
       <div class="photos" id="l_ph"></div>
-      <span class="note">Chỉ chụp trực tiếp bằng camera trong app.</span></div>
+      ${isAdmin()?`<button type="button" class="btn sm" id="l_up" style="align-self:flex-start">Tải ảnh từ máy (chỉ Admin)</button>`:`<span class="note">Chỉ chụp trực tiếp bằng camera trong app.</span>`}</div>
     ${!l?`<label class="f full" style="flex-direction:row;align-items:center;gap:8px;color:var(--fg)"><input id="l_rep" type="checkbox" style="width:auto"> Lặp lại cùng điểm cho <input id="l_n" type="number" min="1" max="30" value="5" style="width:70px"> ngày liên tiếp</label>`:""}
     <div class="row full">${l?`<button type="button" class="btn danger" id="l_del">Xoá lịch</button>`:""}<span class="sp"></span><button type="button" class="btn" data-close>Huỷ</button><button class="btn primary" type="submit" id="l_ok">${isAdmin()&&!l?"Giao lịch":"Lưu"}</button></div>
    </form>`);
@@ -509,6 +510,9 @@ function openLoc(id){
     $("#l_ph").querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{shots.splice(+b.dataset.rs,1);drawL()});
     hydratePhotos()};
   drawL();
+  const up=$("#l_up");if(up)up.onclick=()=>{const i=document.createElement("input");i.type="file";i.accept=IMG_ACC;i.multiple=true;
+    i.onchange=async()=>{const loc={donVi:$("#l_dv").value||"",ten:$("#l_ten").value.trim()||"Vị trí bán hàng"};
+      for(const f of [...i.files]){if(keep.length+shots.length>=3)break;try{const r=await stampPhoto(f,loc);r.url=r.canvas.toDataURL("image/jpeg",.8);shots.push(r);drawL()}catch(e){toast("Không đọc được ảnh")}}};i.click()};
   if(l){const b=$("#l_del");b.onclick=async()=>{if(!b.dataset.arm){b.dataset.arm=1;b.textContent="Bấm lần nữa để xoá";return}
     b.disabled=true;try{await api("deleteLocation",S.token,l.id);await reload();closeSheet();render();toast("Đã xoá lịch.")}catch(e){b.disabled=false;toast(errMsg(e))}}}
   $("#lf").onsubmit=async e=>{e.preventDefault();
