@@ -195,6 +195,39 @@ body.is-login header.top{display:none}
 </style>
 <style>.mark{background:#fff!important;border:1px solid var(--line);padding:3px;overflow:hidden}.mark{display:flex!important;align-items:center;justify-content:center}.mark img{max-width:100%;max-height:100%;width:auto;height:auto;display:block}.mark.lg{padding:5px}</style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<style>
+/* Nền thương hiệu VNPT: xanh dương, sóng tín hiệu */
+:root{--vnpt1:#0057b8;--vnpt2:#003d86;--vnpt3:#0a8fe0}
+body.is-login{background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.09' stroke-width='2'%3E%3Ccircle cx='1080' cy='110' r='90'/%3E%3Ccircle cx='1080' cy='110' r='175'/%3E%3Ccircle cx='1080' cy='110' r='260'/%3E%3Ccircle cx='1080' cy='110' r='345'/%3E%3Ccircle cx='1080' cy='110' r='430'/%3E%3Ccircle cx='1080' cy='110' r='515'/%3E%3Ccircle cx='1080' cy='110' r='600'/%3E%3Ccircle cx='1080' cy='110' r='685'/%3E%3C/g%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='2'%3E%3Ccircle cx='60' cy='760' r='70'/%3E%3Ccircle cx='60' cy='760' r='140'/%3E%3Ccircle cx='60' cy='760' r='210'/%3E%3Ccircle cx='60' cy='760' r='280'/%3E%3Ccircle cx='60' cy='760' r='350'/%3E%3C/g%3E%3Cg fill='none' stroke='%235fd0ff' stroke-opacity='.22' stroke-width='3'%3E%3Cpath d='M-40 600 C 220 500 420 740 700 620 S 1100 520 1260 600'/%3E%3Cpath d='M-40 650 C 240 560 440 790 720 670 S 1120 580 1260 650' stroke-opacity='.12'/%3E%3Cpath d='M-40 700 C 260 620 460 830 740 720 S 1140 640 1260 700' stroke-opacity='.08'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat fixed,
+  radial-gradient(circle at 1px 1px,rgba(255,255,255,.10) 1px,transparent 1.6px) 0 0/22px 22px,
+  linear-gradient(135deg,var(--vnpt3) 0%,var(--vnpt1) 45%,var(--vnpt2) 100%);
+  background-attachment:fixed;min-height:100vh}
+body.is-login::before{background:transparent}
+body.is-login .login-brand h1{color:#fff}
+body.is-login .login-brand p{color:rgba(255,255,255,.82)}
+body.is-login .login-brand .mark{border-color:rgba(255,255,255,.6);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+body.is-login #lg{border:0;box-shadow:0 18px 50px rgba(0,30,80,.35),0 2px 6px rgba(0,30,80,.2)}
+body.is-login .tabs{display:none!important}
+html{background:var(--bg)}html:has(body.is-login){background:#003d86}
+body.is-login{padding-bottom:0}
+@media (max-width:640px){header.top .brand small{display:none}header.top .brand h1{font-size:16px;white-space:nowrap}}
+body:not(.is-login) .tabs{border-bottom-color:rgba(255,255,255,.25)}
+body:not(.is-login) .tabs button{color:rgba(255,255,255,.78)}
+body:not(.is-login) .tabs button:hover{color:#fff}
+body:not(.is-login) .tabs button[aria-current="true"]{color:#fff;border-color:#ffc107}
+body:not(.is-login) .tabs .cta .btn{background:#fff;color:var(--vnpt1);border-color:#fff}
+body:not(.is-login) .tabs .cta .btn:not(.primary){background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.35)}
+body:not(.is-login) .act.primary{background:linear-gradient(135deg,#0a8fe0,#0057b8);border-color:rgba(255,255,255,.35);box-shadow:0 8px 24px rgba(0,40,100,.25)}
+body:not(.is-login){background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.09' stroke-width='2'%3E%3Ccircle cx='1080' cy='110' r='90'/%3E%3Ccircle cx='1080' cy='110' r='175'/%3E%3Ccircle cx='1080' cy='110' r='260'/%3E%3Ccircle cx='1080' cy='110' r='345'/%3E%3Ccircle cx='1080' cy='110' r='430'/%3E%3Ccircle cx='1080' cy='110' r='515'/%3E%3Ccircle cx='1080' cy='110' r='600'/%3E%3Ccircle cx='1080' cy='110' r='685'/%3E%3C/g%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='2'%3E%3Ccircle cx='60' cy='760' r='70'/%3E%3Ccircle cx='60' cy='760' r='140'/%3E%3Ccircle cx='60' cy='760' r='210'/%3E%3Ccircle cx='60' cy='760' r='280'/%3E%3Ccircle cx='60' cy='760' r='350'/%3E%3C/g%3E%3Cg fill='none' stroke='%235fd0ff' stroke-opacity='.22' stroke-width='3'%3E%3Cpath d='M-40 600 C 220 500 420 740 700 620 S 1100 520 1260 600'/%3E%3Cpath d='M-40 650 C 240 560 440 790 720 670 S 1120 580 1260 650' stroke-opacity='.12'/%3E%3Cpath d='M-40 700 C 260 620 460 830 740 720 S 1140 640 1260 700' stroke-opacity='.08'/%3E%3C/g%3E%3C/svg%3E") top center/1600px auto no-repeat,
+  linear-gradient(180deg,var(--vnpt1) 0,var(--vnpt2) 150px,var(--bg) 150px) no-repeat,var(--bg)}
+body:not(.is-login)::before{background:var(--vnpt1)}
+body:not(.is-login) header.top .brand h1{color:#fff}
+body:not(.is-login) header.top .brand small,body:not(.is-login) header.top .who{color:rgba(255,255,255,.85)}
+body:not(.is-login) header.top .who b{color:#fff}
+body:not(.is-login) header.top .who .btn{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.35)}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -205,7 +238,7 @@ body.is-login header.top{display:none}
   <nav class="tabs" id="tabs"></nav>
   <main id="view"><div class="empty"><h3>Đang tải…</h3></div></main>
 </div>
-<p class="note" id="appver" style="text-align:center;margin:24px 0 8px">Phiên bản 17/10/2026 00:30 · Lãnh đạo = Admin, mail giao lịch</p>
+<p id="appver" hidden>Phiên bản 17/10/2026 10:00</p>
 <div class="bottombar" id="bottombar"></div>
 <div id="layer"></div>
 <script>const IMG_ACC="image/\x2a";
@@ -214,12 +247,13 @@ body.is-login header.top{display:none}
 const UNITS_RAW={"VNPT Cần Giuộc":["xã Phước Lý","xã Mỹ Lộc","xã Cần Giuộc","xã Phước Vĩnh Tây","xã Tân Tập"],"VNPT Đức Huệ":["xã Mỹ Quý","xã Đông Thành","xã Đức Huệ","xã An Ninh","xã Hiệp Hoà"],"VNPT Đức Hòa":["xã Hậu Nghĩa","Xã Hoà Khánh","xã Đức Lập","xã Mỹ Hạnh","xã Đức Hòa"],"VNPT Bến Lức":["xã Thạnh Lợi","xã Bình Đức","Xã Lương Hoà","xã Bến Lức","xã Mỹ Yên"],"VNPT Tân Trụ":["Xã Vàm Cỏ","xã Tân Trụ","xã Nhựt Tảo"],"VNPT Tầm Vu":["xã Thuận Mỹ","xã An Lục Long","xã Tầm Vu","xã Vĩnh Công"],"VNPT Long An":["Phường Long An","Phường Tân An","Phường Khánh Hậu"],"VNPT Vĩnh Hưng":["xã Hưng Điền","xã Vĩnh Thạnh","xã Tân Hưng","xã Vĩnh Châu","xã Tuyên Bình","xã Vĩnh Hưng","xã Khánh Hưng"],"VNPT Kiến Tường":["xã Tuyên Thạnh","xã Bình Hiệp","Phường Kiến Tường","Xã Bình Hoà","Xã Mộc Hoá"],"VNPT Tân Thạnh":["xã Hậu Thạnh","xã Nhơn Hòa Lập","xã Nhơn Ninh","xã Tân Thạnh"],"VNPT Thạnh Hóa":["xã Bình Thành","xã Thạnh Phước","xã Thạnh Hóa","xã Tân Tây"],"VNPT Thủ Thừa":["xã Thủ Thừa","xã Mỹ An","xã Mỹ Thạnh","xã Tân Long"],"VNPT Cần Đước":["xã Long Cang","xã Rạch Kiến","Xã Mỹ Lệ","xã Tân Lân","xã Cần Đước","xã Long Hựu"],"VNPT Tân Biên":["Xã Tân Biên","Xã Thạnh Bình","Xã Tân Lập"],"VNPT Tân Châu":["Xã Tân Hội","Xã Tân Hòa","Xã Tân Châu","Xã Tân Thành","Xã Tân Đông"],"VNPT Tân Ninh":["Phường Tân Ninh","Phường Bình Minh","Phường Ninh Thạnh","Phường Thanh Điền","Xã Trà Vong"],"VNPT Trảng Bàng":["Phường An Tịnh","Xã Hưng Thuận","Phường Trảng Bàng","Xã Phước Chỉ"],"VNPT Bến Cầu":["Xã Bến Cầu","Xã Long Chữ","Xã Long Thuận"],"VNPT Châu Thành":["Xã Châu Thành","Xã Hòa Hội","Xã Ninh Điền","Xã Phước Vinh","Xã Hảo Đước"],"VNPT Dương Minh Châu":["Xã Tân Phú","Xã Lộc Ninh","Xã Dương Minh Châu","Xã Cầu Khởi","Xã Truông Mít"],"VNPT Hòa Thành":["Phường Long Hoa","Phường Hòa Thành"],"VNPT Gò Dầu":["Phường Gò Dầu","Phường Gia Lộc","Xã Thạnh Đức","Xã Phước Thạnh"]};
 const UNITS={};Object.keys(UNITS_RAW).sort((a,b)=>a.localeCompare(b,'vi')).forEach(k=>UNITS[k]=UNITS_RAW[k].map(x=>x.charAt(0).toUpperCase()+x.slice(1)));
 const UNIT_LIST=Object.keys(UNITS);
+function addUnits(arr){(arr||[]).forEach(u=>{u=String(u||"").trim();if(u&&UNIT_LIST.indexOf(u)<0)UNIT_LIST.push(u)})}
 const HINH_THUC=["Bán hàng lưu động","Điểm bán cố định","Chợ / khu dân cư","Trường học / KCN","Sự kiện / hội chợ","Khác"];
 const ROLES={admin:{t:"Admin",d:"Toàn quyền: thống kê, phân quyền, đánh giá báo cáo"},lanhdao:{t:"Lãnh đạo",d:"Như Admin: giao lịch, xem và đánh giá báo cáo toàn tỉnh"},totruong:{t:"Tổ trưởng di động",d:"Khai báo điểm bán, check-in báo cáo của đơn vị"},giamdoc:{t:"Giám đốc VNPT khu vực",d:"Giao lịch, xem và đánh giá báo cáo của đơn vị mình"}};
 const emailKey=e=>String(e||"").trim().toLowerCase();
 const validEmail=e=>/^[a-z0-9._+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/.test(e);
 const KQ=[["tiepCan","Khách tiếp cận","lượt"],["tbtt","TB trả trước PTM","TB"],["tbts","TB trả sau PTM","TB"],["sim4g","Đổi SIM 4G","SIM"],["doanhThu","Doanh thu","đ"]];
-const OLD_PHOTO_MS=2*3600*1000; 
+const OLD_PHOTO_MS=2*3600*1000;const FRESH_MS=3*60*1000; 
 
 
 const $=s=>document.querySelector(s);
@@ -258,23 +292,55 @@ async function stampPhoto(file,l){
   const blob=await new Promise(r=>c.toBlob(r,"image/jpeg",.78));
   return{blob,url:URL.createObjectURL(blob),taken,old,canvas:c};
 }
-function stampSource(src,sw,sh,l){
-  const max=1280;const k=Math.min(1,max/Math.max(sw,sh));const w=Math.round(sw*k),h=Math.round(sh*k);
+const TM_WD=["Chủ nhật","Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy"];
+let GEO=null;
+function geoNow(){return new Promise(res=>{try{if(!navigator.geolocation)return res(GEO);navigator.geolocation.getCurrentPosition(p=>{GEO={lat:p.coords.latitude,lng:p.coords.longitude,acc:Math.round(p.coords.accuracy||0),t:Date.now()};res(GEO)},()=>res(GEO),{enableHighAccuracy:true,timeout:8000,maximumAge:60000})}catch(e){res(GEO)}})}
+function stampSource(src,sw,sh,l,geo){
+  const max=1600;const k=Math.min(1,max/Math.max(sw,sh));const w=Math.round(sw*k),h=Math.round(sh*k);
   const c=document.createElement("canvas");c.width=w;c.height=h;const g=c.getContext("2d");g.drawImage(src,0,0,w,h);
-  const now=Date.now();const fs=Math.max(14,Math.round(w/42));const lines=[`${l&&l.donVi||""}${l&&l.ten?" · "+l.ten:""}`,`Chụp trực tiếp: ${fmtDT(now)}`];
-  const bh=fs*1.45*lines.length+fs*.8;g.fillStyle="rgba(0,0,0,.55)";g.fillRect(0,h-bh,w,bh);
-  g.fillStyle="#fff";g.font=`600 ${fs}px "Be Vietnam Pro",system-ui,sans-serif`;g.textBaseline="top";
-  lines.forEach((t,n)=>g.fillText(t,fs*.6,h-bh+fs*.4+n*fs*1.45,w-fs*1.2));
-  return{url:c.toDataURL("image/jpeg",.8),taken:now,old:false};
+  const now=Date.now(),d=new Date(now);const u=Math.min(w,h);const fs=Math.max(13,Math.round(u/34)),big=Math.round(fs*2.9),pd=Math.round(fs*.9);
+  const F=(wt,sz)=>`${wt} ${sz}px "Be Vietnam Pro",system-ui,sans-serif`;
+  const place=[l&&l.donVi,l&&l.ten].filter(Boolean).join(" · ")||"Điểm bán hàng";
+  const gps=geo&&geo.lat?`Toạ độ: ${geo.lat.toFixed(6)}, ${geo.lng.toFixed(6)}${geo.acc?" (±"+geo.acc+"m)":""}`:"Toạ độ: chưa lấy được vị trí (bật GPS)";
+  const who=S.user?`Người chụp: ${S.user.hoTen||S.user.email}`:"";
+  const lines=[place,gps,who].filter(Boolean);
+  const bh=pd*2+big+fs*.5+lines.length*fs*1.45;
+  const gr=g.createLinearGradient(0,h-bh-fs*2,0,h);gr.addColorStop(0,"rgba(0,0,0,0)");gr.addColorStop(.35,"rgba(0,0,0,.5)");gr.addColorStop(1,"rgba(0,0,0,.72)");
+  g.fillStyle=gr;g.fillRect(0,h-bh-fs*2,w,bh+fs*2);
+  g.textBaseline="top";const x=pd,y=h-bh+pd;
+  g.fillStyle="#fff";g.font=F(800,big);const tm=`${pad(d.getHours())}:${pad(d.getMinutes())}`;g.fillText(tm,x,y);
+  const tw=g.measureText(tm).width;const bx=x+tw+fs*.7;
+  g.fillStyle="#ffc107";g.fillRect(bx,y+big*.08,Math.max(3,fs*.22),big*.84);
+  g.fillStyle="#fff";g.font=F(700,Math.round(fs*1.15));g.fillText(`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`,bx+fs*.75,y+big*.08);
+  g.font=F(500,fs);g.fillText(`${TM_WD[d.getDay()]} · ${pad(d.getSeconds())}s`,bx+fs*.75,y+big*.08+fs*1.5);
+  g.font=F(600,fs);lines.forEach((t,n)=>g.fillText(t,x,y+big+fs*.5+n*fs*1.45,w-pd*2));
+  g.font=F(700,Math.round(fs*.8));g.textAlign="right";g.fillStyle="rgba(255,255,255,.85)";g.fillText("GSBH · VNPT Tây Ninh",w-pd,pd);g.textAlign="left";
+  return{url:c.toDataURL("image/jpeg",.82),taken:now,old:false,geo:geo||null};
 }
-async function openCamera(opt,onDone){
+const isTouchDev=()=>/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Macintosh/.test(navigator.userAgent));
+function openCamera(opt,onDone){
+  const max=Math.max(0,opt.max||1);if(!max)return toast("Đã đủ số ảnh tối đa.");
+  if(!isTouchDev())return openLiveCamera(opt,onDone);
+  const geoP=geoNow();
+  document.querySelectorAll("input.camin").forEach(x=>x.remove());
+  const i=document.createElement("input");i.type="file";i.accept=IMG_ACC;i.setAttribute("capture","environment");i.className="camin";i.style.display="none";document.body.appendChild(i);
+  i.onchange=async()=>{const f=i.files&&i.files[0];i.remove();if(!f)return;
+    if(f.lastModified&&Date.now()-f.lastModified>FRESH_MS)return toast("Ảnh không phải vừa chụp. Vui lòng bấm chụp ảnh mới bằng camera.");
+    toast("Đang gắn timemark…");
+    try{const geo=await Promise.race([geoP,new Promise(r=>setTimeout(()=>r(GEO),5000))]);
+      const {i:img,u}=await loadImg(f);const shot=stampSource(img,img.naturalWidth,img.naturalHeight,opt.loc?opt.loc():null,geo);URL.revokeObjectURL(u);
+      onDone([shot]);toast("Đã chụp 1 ảnh có timemark.")}
+    catch(e){toast("Không đọc được ảnh vừa chụp, thử lại.")}};
+  i.click();
+}
+async function openLiveCamera(opt,onDone){
   const max=Math.max(0,opt.max||1);if(!max)return toast("Đã đủ số ảnh tối đa.");
   const L=document.createElement("div");L.className="cam";document.body.appendChild(L);
   L.innerHTML=`<div class="cam-top"><b>${esc(opt.title||"Chụp ảnh")}</b><span id="cm_n">0/${max}</span></div>
     <video id="cm_v" autoplay playsinline muted></video><div class="cam-strip" id="cm_s"></div>
     <div class="cam-bar"><button type="button" class="btn" id="cm_x">Huỷ</button><button type="button" class="shutter" id="cm_shot" aria-label="Chụp"></button><button type="button" class="btn" id="cm_flip">Đổi camera</button></div>
     <div class="cam-done"><button type="button" class="btn primary" id="cm_ok" disabled>Xong</button></div>`;
-  const v=L.querySelector("#cm_v");const shots=[];let stream=null,facing="environment";
+  const v=L.querySelector("#cm_v");const shots=[];let stream=null,facing="environment";geoNow();
   const stop=()=>{if(stream)stream.getTracks().forEach(t=>t.stop());stream=null};
   const close=()=>{stop();L.remove()};
   const start=async()=>{stop();
@@ -284,7 +350,7 @@ async function openCamera(opt,onDone){
   const upd=()=>{L.querySelector("#cm_n").textContent=`${shots.length}/${max}`;L.querySelector("#cm_ok").disabled=!shots.length;
     L.querySelector("#cm_s").innerHTML=shots.map(x=>`<img src="${x.url}" alt="">`).join("");L.querySelector("#cm_ok").textContent=shots.length?`Xong (${shots.length} ảnh)`:"Xong"};
   L.querySelector("#cm_shot").onclick=()=>{if(!v.videoWidth)return;if(shots.length>=max)return toast("Đã đủ số ảnh tối đa.");
-    shots.push(stampSource(v,v.videoWidth,v.videoHeight,opt.loc?opt.loc():null));upd();L.classList.add("flash");setTimeout(()=>L.classList.remove("flash"),150);
+    shots.push(stampSource(v,v.videoWidth,v.videoHeight,opt.loc?opt.loc():null,GEO));upd();L.classList.add("flash");setTimeout(()=>L.classList.remove("flash"),150);
     if(shots.length>=max)L.querySelector("#cm_ok").click()};
   L.querySelector("#cm_flip").onclick=()=>{facing=facing==="environment"?"user":"environment";start()};
   L.querySelector("#cm_x").onclick=close;
@@ -333,7 +399,7 @@ async function boot(){
 }
 async function reload(silent){
   S.loading=true;
-  try{const d=await api("getData",S.token);S.user=d.user;S.locs=d.locs;S.cis=d.cis;S.srvToday=d.today}
+  try{const d=await api("getData",S.token);S.user=d.user;S.locs=d.locs;S.cis=d.cis;S.srvToday=d.today;addUnits(d.units);addUnits(S.locs.map(l=>l.donVi))}
   catch(e){if(errMsg(e)==="AUTH"){lsSet(null);S.token=null;S.user=null;toast("Phiên đăng nhập đã hết hoặc tài khoản thay đổi. Đăng nhập lại.")}throw e}
   finally{S.loading=false}
 }
@@ -350,7 +416,7 @@ function render(){
   hydratePhotos();
 }
 function navOff(){$("#tabs").innerHTML="";$("#bottombar").innerHTML=""}
-function roleLabel(){if(!S.user)return"";if(S.user.role==="totruong")return S.user.donVi;if(S.user.role==="giamdoc")return "GĐ "+S.user.donVi;return ROLES[S.user.role]?.t||""}
+function roleLabel(){if(!S.user)return"";const cd=S.user.chucDanh||ROLES[S.user.role]?.t||"";if(S.user.role==="totruong"||S.user.role==="giamdoc")return S.user.donVi;return cd}
 function renderWho(){
   const w=$("#who");if(!S.user){w.innerHTML="";return}
   w.innerHTML=`<span style="text-align:right"><b>${esc(S.user.hoTen||S.user.email)}</b><br>${esc(roleLabel())}</span><button class="btn sm" data-act="refresh" aria-label="Làm mới">↻</button><button class="btn sm" data-act="logout">Đăng xuất</button>`;
@@ -440,7 +506,7 @@ function renderPoints(v){
   const todayAll=scope.filter(l=>l.ngay===t),todayDone=todayAll.filter(l=>locCheckins(l).length).length,late=scope.filter(l=>locState(l)==="overdue").length;
   let html=actionBar()+`<div class="toolbar">
     <div class="seg">${[["today","Hôm nay"],["next","Sắp tới"],["past","Đã qua"],["late",`Quá hạn${late?" ("+late+")":""}`],["all","Tất cả"]].map(([k,l])=>`<button data-when="${k}" aria-pressed="${f.when===k}">${l}</button>`).join("")}</div>
-    ${seeAll()?`<select id="f_unit"><option value="">Tất cả 22 đơn vị</option>${UNIT_LIST.map(u=>`<option ${f.unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select>`:unitPill()}
+    ${seeAll()?`<select id="f_unit"><option value="">Tất cả đơn vị</option>${UNIT_LIST.map(u=>`<option ${f.unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select>`:unitPill()}
     <input id="f_q" type="search" placeholder="Tìm điểm bán, địa chỉ…" value="${esc(f.q)}">
   </div>`;
   if(todayAll.length)html+=`<div class="banner info" style="margin-bottom:12px">Hôm nay ${fmtD(t)}: <b>${todayDone}/${todayAll.length}</b> lịch bán hàng đã check-in${su?" tại "+esc(su):""}.</div>`;
@@ -466,7 +532,7 @@ function renderOverview(v){
   const per=scopeUnits().filter(u=>!o.unit||u===o.unit).map(u=>{const x=L.filter(l=>l.donVi===u);const c={u,all:x.length};["done","overdue","due","soon"].forEach(k=>c[k]=x.filter(l=>locState(l,o.soon)===k).length);return c}).sort((a,b)=>b.overdue-a.overdue||b.due-a.due||b.all-a.all);
   const recent=L.slice().sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))).slice(0,8);
   v.innerHTML=actionBar()+`<div class="toolbar">
-    ${seeAll()?`<select id="o_unit"><option value="">Toàn tỉnh (22 đơn vị)</option>${UNIT_LIST.map(u=>`<option ${o.unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select>`:unitPill()}
+    ${seeAll()?`<select id="o_unit"><option value="">Toàn tỉnh</option>${UNIT_LIST.map(u=>`<option ${o.unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select>`:unitPill()}
     <div class="seg">${[["all","Tất cả lịch"],["month","Tháng này"]].map(([k,l])=>`<button data-ovr="${k}" aria-pressed="${o.range===k}">${l}</button>`).join("")}</div>
     <label class="note" style="display:flex;gap:6px;align-items:center">Sắp đến hạn trong<select id="o_soon" style="width:auto">${[1,2,3,5,7].map(n=>`<option value="${n}" ${o.soon===n?"selected":""}>${n} ngày</option>`).join("")}</select></label></div>
   <div class="kpis">${tile("all","Tổng kế hoạch bán hàng",L.length,`${fmtN(doneN)} đã thực hiện · ${pastN?Math.round(doneN/pastN*100):0}% số lịch đến hạn`)}${tile("soon","Sắp đến hạn",by.soon.length,`Trong ${o.soon} ngày tới, chưa thực hiện`)}${tile("due","Đến hạn hôm nay",by.due.length,`Ngày ${fmtD(t)}, chưa check-in`)}${tile("overdue","Quá hạn",by.overdue.length,"Ngày bán đã qua, chưa báo cáo")}</div>
@@ -618,7 +684,7 @@ function renderStats(v){
   v.innerHTML=`<div class="toolbar">
     <label class="f" style="flex:1 1 140px">Từ ngày<input id="s_from" type="date" value="${esc(st.from)}"></label>
     <label class="f" style="flex:1 1 140px">Đến ngày<input id="s_to" type="date" value="${esc(st.to)}"></label>
-    ${seeAll()?`<label class="f" style="flex:2 1 200px">Đơn vị<select id="s_unit" style="width:100%"><option value="">Toàn tỉnh (22 đơn vị)</option>${UNIT_LIST.map(u=>`<option ${st.unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select></label>`:unitPill()}</div>
+    ${seeAll()?`<label class="f" style="flex:2 1 200px">Đơn vị<select id="s_unit" style="width:100%"><option value="">Toàn tỉnh</option>${UNIT_LIST.map(u=>`<option ${st.unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select></label>`:unitPill()}</div>
   <div class="kpis">
     <div class="kpi"><div class="l">Buổi bán hàng có báo cáo</div><div class="v">${fmtN(tot.buoi)}</div><div class="s">${fmtD(st.from)} – ${fmtD(st.to)}</div></div>
     <div class="kpi"><div class="l">Tỷ lệ lịch đã check-in</div><div class="v">${due.length?Math.round(dueDone/due.length*1000)/10+"%":"—"}</div><div class="s">${fmtN(dueDone)} lịch có BC / ${fmtN(due.length)} lịch đến hạn</div></div>
