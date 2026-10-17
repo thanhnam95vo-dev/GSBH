@@ -227,6 +227,33 @@ body:not(.is-login) header.top .brand h1{color:#fff}
 body:not(.is-login) header.top .brand small,body:not(.is-login) header.top .who{color:rgba(255,255,255,.85)}
 body:not(.is-login) header.top .who b{color:#fff}
 body:not(.is-login) header.top .who .btn{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.35)}
+
+/* Header ứng dụng (đã đăng nhập) */
+body:not(.is-login) header.top{display:flex;align-items:center;gap:14px;padding-block:14px 12px;flex-wrap:nowrap}
+body:not(.is-login) header.top .brand{flex:1;min-width:0}
+body:not(.is-login) header.top .brand h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .who{display:flex;align-items:center;gap:12px;min-width:0}
+header.top .me{display:flex;align-items:center;gap:10px;min-width:0;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:4px 14px 4px 4px}
+header.top .av{width:32px;height:32px;border-radius:50%;background:#ffc107;color:#003d86;display:grid;place-items:center;font-weight:800;font-size:13px;flex:none;letter-spacing:.02em}
+header.top .me-t{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+header.top .me-t b{color:#fff;font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .me-t small{color:rgba(255,255,255,.82);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .hbtn{display:flex;gap:8px;flex:none}
+header.top .ibtn{display:inline-flex;align-items:center;gap:6px;height:38px;min-width:38px;justify-content:center;padding:0 10px;border-radius:10px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:600;font-size:13px;cursor:pointer}
+header.top .ibtn:active{background:rgba(255,255,255,.25)}
+header.top .ibtn svg{width:18px;height:18px}
+@media (max-width:640px){
+  body:not(.is-login) header.top{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;row-gap:12px;column-gap:10px;padding-block:12px 14px}
+  header.top .who{display:contents}
+  header.top .brand{grid-column:1;grid-row:1}
+  header.top .hbtn{grid-column:2;grid-row:1}
+  header.top .me{grid-column:1/-1;grid-row:2;justify-self:start;max-width:100%}
+  header.top .ibtn span{display:none}
+  header.top .ibtn{padding:0;width:38px}
+  body:not(.is-login) header.top .brand h1{font-size:17px}
+  header.top .brand .mark{width:38px;height:38px}
+  body:not(.is-login){background-size:1600px auto,100% 100%,auto}
+}
 </style>
 </head>
 <body>
@@ -419,7 +446,8 @@ function navOff(){$("#tabs").innerHTML="";$("#bottombar").innerHTML=""}
 function roleLabel(){if(!S.user)return"";const cd=S.user.chucDanh||ROLES[S.user.role]?.t||"";if(S.user.role==="totruong"||S.user.role==="giamdoc")return S.user.donVi;return cd}
 function renderWho(){
   const w=$("#who");if(!S.user){w.innerHTML="";return}
-  w.innerHTML=`<span style="text-align:right"><b>${esc(S.user.hoTen||S.user.email)}</b><br>${esc(roleLabel())}</span><button class="btn sm" data-act="refresh" aria-label="Làm mới">↻</button><button class="btn sm" data-act="logout">Đăng xuất</button>`;
+  const nm=S.user.hoTen||S.user.email;const ws=String(nm).trim().split(/\s+/);const ini=((ws[0]||"")[0]||"")+(ws.length>1?(ws[ws.length-1][0]||""):"");
+  w.innerHTML=`<div class="me"><span class="av">${esc(ini.toUpperCase())}</span><span class="me-t"><b>${esc(nm)}</b><small>${esc(roleLabel())}</small></span></div><div class="hbtn"><button class="ibtn" data-act="refresh" aria-label="Làm mới" title="Làm mới"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button><button class="ibtn out" data-act="logout" aria-label="Đăng xuất" title="Đăng xuất"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 16l-4-4 4-4"/><path d="M6 12h10"/></svg><span>Đăng xuất</span></button></div>`;
 }
 function renderNav(){
   const tabs=[];if(canStats())tabs.push(["overview","Tổng quan",ICON.chart]);
