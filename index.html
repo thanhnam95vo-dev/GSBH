@@ -205,7 +205,7 @@ body.is-login header.top{display:none}
   <nav class="tabs" id="tabs"></nav>
   <main id="view"><div class="empty"><h3>Đang tải…</h3></div></main>
 </div>
-<p class="note" id="appver" style="text-align:center;margin:24px 0 8px">Phiên bản 17/10/2026 00:15 · VNPT Long An</p>
+<p class="note" id="appver" style="text-align:center;margin:24px 0 8px">Phiên bản 17/10/2026 00:30 · Lãnh đạo = Admin, mail giao lịch</p>
 <div class="bottombar" id="bottombar"></div>
 <div id="layer"></div>
 <script>const IMG_ACC="image/\x2a";
@@ -215,7 +215,7 @@ const UNITS_RAW={"VNPT Cần Giuộc":["xã Phước Lý","xã Mỹ Lộc","xã 
 const UNITS={};Object.keys(UNITS_RAW).sort((a,b)=>a.localeCompare(b,'vi')).forEach(k=>UNITS[k]=UNITS_RAW[k].map(x=>x.charAt(0).toUpperCase()+x.slice(1)));
 const UNIT_LIST=Object.keys(UNITS);
 const HINH_THUC=["Bán hàng lưu động","Điểm bán cố định","Chợ / khu dân cư","Trường học / KCN","Sự kiện / hội chợ","Khác"];
-const ROLES={admin:{t:"Admin",d:"Toàn quyền: thống kê, phân quyền, đánh giá báo cáo"},lanhdao:{t:"Lãnh đạo (chỉ xem)",d:"Xem điểm bán, báo cáo, thống kê toàn tỉnh"},totruong:{t:"Tổ trưởng di động",d:"Khai báo điểm bán, check-in báo cáo của đơn vị"},giamdoc:{t:"Giám đốc VNPT khu vực",d:"Giao lịch, xem và đánh giá báo cáo của đơn vị mình"}};
+const ROLES={admin:{t:"Admin",d:"Toàn quyền: thống kê, phân quyền, đánh giá báo cáo"},lanhdao:{t:"Lãnh đạo",d:"Như Admin: giao lịch, xem và đánh giá báo cáo toàn tỉnh"},totruong:{t:"Tổ trưởng di động",d:"Khai báo điểm bán, check-in báo cáo của đơn vị"},giamdoc:{t:"Giám đốc VNPT khu vực",d:"Giao lịch, xem và đánh giá báo cáo của đơn vị mình"}};
 const emailKey=e=>String(e||"").trim().toLowerCase();
 const validEmail=e=>/^[a-z0-9._+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/.test(e);
 const KQ=[["tiepCan","Khách tiếp cận","lượt"],["tbtt","TB trả trước PTM","TB"],["tbts","TB trả sau PTM","TB"],["sim4g","Đổi SIM 4G","SIM"],["doanhThu","Doanh thu","đ"]];
@@ -310,12 +310,12 @@ const S={token:null,user:null,locs:[],cis:[],srvToday:null,ready:false,loading:f
 const PHOTO_CACHE={};
 function lsGet(){try{return localStorage.getItem(LS)}catch(e){return null}}
 function lsSet(v){try{v?localStorage.setItem(LS,v):localStorage.removeItem(LS)}catch(e){}}
-const isAdmin=()=>S.user&&S.user.role==="admin";
+const isAdmin=()=>S.user&&(S.user.role==="admin"||S.user.role==="lanhdao");
 const seeAll=()=>S.user&&(S.user.role==="admin"||S.user.role==="lanhdao");
 const isGD=()=>S.user&&S.user.role==="giamdoc";
 const isManager=()=>isAdmin()||isGD();
 const canStats=()=>seeAll()||isGD();
-const canWrite=()=>S.user&&(S.user.role==="admin"||S.user.role==="totruong"||S.user.role==="giamdoc");
+const canWrite=()=>S.user&&(isAdmin()||S.user.role==="totruong"||S.user.role==="giamdoc");
 const canReport=()=>S.user&&S.user.role==="totruong";
 const myUnit=()=>(S.user&&(S.user.role==="totruong"||S.user.role==="giamdoc")&&S.user.donVi)||"";
 const scopeUnits=()=>seeAll()?UNIT_LIST:[myUnit()];
@@ -410,7 +410,7 @@ function locCard(l){
   const t=todayS();const cs=locCheckins(l);const s=locState(l);const x=STATE[s];
   const ph=cs.flatMap(c=>c.photos||[]);
   return`<article class="card">
-    <div class="row"><span class="pill ${x.cls}">${x.t}${s==="done"&&cs.length>1?` (${cs.length})`:""}</span>${l.giaoBoi==="admin"?'<span class="pill info">Admin giao</span>':l.giaoBoi==="giamdoc"?'<span class="pill info">GĐ khu vực giao</span>':""}${l.phatSinh?'<span class="pill">Phát sinh</span>':""}<span class="sp"></span><span class="note">${esc(l.gioTu||"")}${l.gioDen?"–"+esc(l.gioDen):""}</span></div>
+    <div class="row"><span class="pill ${x.cls}">${x.t}${s==="done"&&cs.length>1?` (${cs.length})`:""}</span>${l.giaoBoi==="admin"?'<span class="pill info">Admin giao</span>':l.giaoBoi==="lanhdao"?'<span class="pill info">Lãnh đạo giao</span>':l.giaoBoi==="giamdoc"?'<span class="pill info">GĐ khu vực giao</span>':""}${l.phatSinh?'<span class="pill">Phát sinh</span>':""}<span class="sp"></span><span class="note">${esc(l.gioTu||"")}${l.gioDen?"–"+esc(l.gioDen):""}</span></div>
     <h3>${esc(l.ten)}</h3>
     <div class="meta"><span>${esc(l.diaChi||"")}</span>${l.xaPhuong?`<span>${esc(l.xaPhuong)}</span>`:""}</div>
     <div class="meta"><span><b style="color:var(--fg)">${esc(l.donVi)}</b></span><span>${esc(l.hinhThuc||"")}</span>${l.phuTrach?`<span>Phụ trách: ${esc(l.phuTrach)}</span>`:""}</div>
@@ -486,7 +486,7 @@ function openLoc(id){
   const l=id?S.locs.find(x=>x.id===id):null;const unit=l?l.donVi:(myUnit()||S.f.unit||"");
   const title=l?"Sửa lịch bán hàng":isManager()?"Giao lịch bán hàng":"Khai báo lịch bán hàng";
   openSheet(`<div class="head"><h2>${title}</h2><button class="x" data-close aria-label="Đóng">×</button></div>
-   ${isAdmin()&&!l?`<p class="note" style="margin:0">Lịch giao hiện ngay ở VNPT khu vực được chọn, gắn nhãn “Admin giao”.</p>`:isGD()&&!l?`<p class="note" style="margin:0">Lịch giao hiện ngay ở ${esc(myUnit())}, gắn nhãn “GĐ khu vực giao”.</p>`:""}
+   ${isAdmin()&&!l?`<p class="note" style="margin:0">Lịch giao hiện ngay ở VNPT khu vực được chọn; hệ thống tự gửi mail báo Giám đốc và Tổ trưởng di động của đơn vị.</p>`:isGD()&&!l?`<p class="note" style="margin:0">Lịch giao hiện ngay ở ${esc(myUnit())}, hệ thống tự gửi mail báo Tổ trưởng di động.</p>`:""}
    <form id="lf" class="grid2" autocomplete="off">
     <label class="f full">${isManager()?"Giao cho VNPT khu vực":"Đơn vị"}<select id="l_dv" ${isAdmin()?"":"disabled"}>${isAdmin()&&!l?`<option value="">— Chọn đơn vị —</option>`:""}${UNIT_LIST.map(u=>`<option ${unit===u?"selected":""}>${esc(u)}</option>`).join("")}</select></label>
     <label class="f full">Tên điểm bán<input id="l_ten" type="text" required placeholder="VD: Chợ Long Hoa – cổng chính" value="${esc(l?.ten||"")}"></label>
@@ -500,7 +500,7 @@ function openLoc(id){
     <label class="f full">${isManager()?"Yêu cầu / nội dung triển khai":"Ghi chú"}<textarea id="l_gc" placeholder="Chương trình, gói cước trọng tâm, quà tặng…">${esc(l?.ghiChu||"")}</textarea></label>
     <div class="full" style="display:flex;flex-direction:column;gap:6px"><span class="f" style="font-size:13px;font-weight:600;color:var(--muted)">Ảnh vị trí bán hàng (tối đa 3) – giúp nhân viên nhận ra khu vực</span>
       <div class="photos" id="l_ph"></div>
-      ${isManager()?`<button type="button" class="btn sm" id="l_up" style="align-self:flex-start">Tải ảnh từ máy (Admin/GĐ)</button>`:`<span class="note">Chỉ chụp trực tiếp bằng camera trong app.</span>`}</div>
+      ${isManager()?`<button type="button" class="btn sm" id="l_up" style="align-self:flex-start">Tải ảnh từ máy</button>`:`<span class="note">Chỉ chụp trực tiếp bằng camera trong app.</span>`}</div>
     ${!l?`<label class="f full" style="flex-direction:row;align-items:center;gap:8px;color:var(--fg)"><input id="l_rep" type="checkbox" style="width:auto"> Lặp lại cùng điểm cho <input id="l_n" type="number" min="1" max="30" value="5" style="width:70px"> ngày liên tiếp</label>`:""}
     <div class="row full">${l?`<button type="button" class="btn danger" id="l_del">Xoá lịch</button>`:""}<span class="sp"></span><button type="button" class="btn" data-close>Huỷ</button><button class="btn primary" type="submit" id="l_ok">${isManager()&&!l?"Giao lịch":"Lưu"}</button></div>
    </form>`);
@@ -526,7 +526,7 @@ function openLoc(id){
     const n=!l&&$("#l_rep").checked?num($("#l_n").value):1;
     const ok=$("#l_ok");ok.disabled=true;ok.textContent="Đang lưu…";
     d.keepPhotos=keep;const photos=shots.map(x=>({data:x.url}));if(photos.length)ok.textContent="Đang tải ảnh…";
-    try{await api("saveLocation",S.token,d,n,photos);await reload();closeSheet();render();toast(l?"Đã lưu lịch.":isManager()?"Đã giao lịch cho "+d.donVi+".":"Đã khai báo lịch bán hàng.")}
+    try{const rs=await api("saveLocation",S.token,d,n,photos);const ml=rs&&rs.mailed;await reload();closeSheet();render();toast(l?"Đã lưu lịch.":isManager()?"Đã giao lịch cho "+(d.donVi||myUnit())+"."+(ml?" Đã gửi mail báo "+ml+" người (GĐ, Tổ trưởng).":" Chưa gửi được mail: đơn vị chưa khai báo GĐ/Tổ trưởng hoặc lỗi gửi."):"Đã khai báo lịch bán hàng.")}
     catch(x){ok.disabled=false;ok.textContent="Lưu";toast(errMsg(x))}
   };
 }
